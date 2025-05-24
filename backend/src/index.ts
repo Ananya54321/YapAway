@@ -46,17 +46,42 @@ wss.on("connection", (socket) => {
 
     if (parsedmsg.type === "join") {
       const roomId = parsedmsg.payload.roomId;
+      const username = parsedmsg.payload.username || 'anonymous';
+      
+      // Store user information for disconnect handling
+      socketInfo.roomId = roomId;
+      socketInfo.username = username;
+      
+      // Create room if it doesn't exist
       if (!allSockets[roomId]) {
         allSockets[roomId] = [];
       }
+      
+      // Add socket to room
       allSockets[roomId].push(socket);
       console.log(allSockets);
+      
+      // Notify other users in the room that someone joined
+      allSockets[roomId].forEach((s) => {
+        if (s !== socket) { // Don't send notification back to joining user
+          s.send(JSON.stringify({
+            message: `${username} has joined the room`,
+            username: "system",
+            isSystemMessage: true
+          }));
+        }
+      });
     }
 
     if (parsedmsg.type === "chat") {
       const roomId = parsedmsg.payload.roomId;
       allSockets[roomId].forEach((s) => {
-        s.send(parsedmsg.payload.message);
+        // Send a JSON object with message and sender info instead of just the message
+        s.send(JSON.stringify({
+          message: parsedmsg.payload.message,
+          username: parsedmsg.payload.username || 'anonymous',
+          senderId: parsedmsg.payload.senderId || null
+        }));
       });
     }
 
@@ -66,8 +91,28 @@ wss.on("connection", (socket) => {
     // });
   });
 
-  socket.on("disconnect", () => {
-    // allSockets = allSockets.filter((s) => s != socket);
-    // the sockets which have been disconnected are removed from the allSockets array
+  // Store user information for this socket
+  const socketInfo: { roomId?: string, username?: string } = {};
+  
+  socket.on("close", () => {
+    // Handle socket disconnection and notify other users
+    if (socketInfo.roomId && socketInfo.username) {
+      const roomId = socketInfo.roomId;
+      const username = socketInfo.username;
+      
+      // Remove this socket from the room
+      if (allSockets[roomId]) {
+        allSockets[roomId] = allSockets[roomId].filter(s => s !== socket);
+        
+        // Notify remaining users in the room that someone left
+        allSockets[roomId].forEach((s) => {
+          s.send(JSON.stringify({
+            message: `${username} has left the room`,
+            username: "system",
+            isSystemMessage: true
+          }));
+        });
+      }
+    }
   });
 });
