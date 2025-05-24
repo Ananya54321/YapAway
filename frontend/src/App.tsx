@@ -174,14 +174,14 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-900 text-white">
+    <div className="flex flex-col h-screen bg-pastel-light text-pastel-dark">
       {/* Header with connection status */}
-      <div className="bg-gray-800 p-4 flex justify-between items-center shadow-md">
-        <h1 className="text-xl font-bold">Real-Time Chat App</h1>
+      <div className="bg-pastel-primary p-4 flex justify-between items-center shadow-md">
+        <h2 className="text-lg font-bold text-pastel-dark">YapAway</h2>
         <div className="flex items-center">
           <div className={`h-3 w-3 rounded-full mr-2 ${
-            connectionStatus === 'connected' ? 'bg-green-500' : 
-            connectionStatus === 'error' ? 'bg-red-500' : 'bg-yellow-500'
+            connectionStatus === 'connected' ? 'bg-pastel-success' : 
+            connectionStatus === 'error' ? 'bg-pastel-danger' : 'bg-pastel-warning'
           }`}></div>
           <span className="text-sm">
             {connectionStatus === 'connected' ? 'Connected' : 
@@ -193,10 +193,10 @@ function App() {
       {!hasJoined ? (
         // Room joining form (only shown before joining)
         <div className="flex-1 flex items-center justify-center">
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-80">
-            <h2 className="text-xl font-bold mb-4 text-center">Join a Chat Room</h2>
-            <div className="mb-4">
-              <label htmlFor="username" className="block mb-2">Username</label>
+          <div className="bg-pastel-medium p-8 pastel-rounded shadow-lg w-96 pastel-shadow">
+            <h2 className="text-2xl font-bold mb-6 text-center text-pastel-dark">Join a Chat Room</h2>
+            <div className="mb-5">
+              <label htmlFor="username" className="block mb-2 font-medium text-pastel-dark">Username</label>
               <input
                 type="text"
                 id="username"
@@ -204,11 +204,11 @@ function App() {
                 onChange={(e) => setUsername(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Enter your name"
-                className="w-full p-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                className="w-full p-3 rounded-lg bg-pastel-light border border-pastel-primary focus:outline-none focus:ring-2 focus:ring-pastel-secondary"
               />
             </div>
-            <div className="mb-6">
-              <label htmlFor="roomId" className="block mb-2">Room ID</label>
+            <div className="mb-7">
+              <label htmlFor="roomId" className="block mb-2 font-medium text-pastel-dark">Room ID</label>
               <input
                 type="text"
                 id="roomId"
@@ -216,12 +216,12 @@ function App() {
                 onChange={(e) => setRoomId(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Enter room ID"
-                className="w-full p-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                className="w-full p-3 rounded-lg bg-pastel-light border border-pastel-primary focus:outline-none focus:ring-2 focus:ring-pastel-secondary"
               />
             </div>
             <button
               onClick={joinRoom}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white p-2 rounded font-medium transition duration-200"
+              className="w-full bg-pastel-secondary hover:bg-pastel-primary text-pastel-dark p-3 rounded-lg font-medium transition duration-200"
             >
               Join Room
             </button>
@@ -231,10 +231,10 @@ function App() {
         // Chat interface (shown after joining a room)
         <>
           {/* Room information bar */}
-          <div className="bg-gray-800 px-4 py-2 flex items-center border-b border-gray-700">
+          <div className="bg-pastel-primary px-6 py-3 flex items-center border-b border-pastel-bg-medium">
             <div className="flex-1">
-              <h2 className="font-medium">Room: {roomId}</h2>
-              <p className="text-xs text-gray-400">Chatting as {username}</p>
+              <h2 className="font-medium text-pastel-dark">Room: {roomId}</h2>
+              <p className="text-xs text-pastel-text-muted">Chatting as {username}</p>
             </div>
             <button 
               onClick={() => {
@@ -252,7 +252,7 @@ function App() {
                   connectWebSocket();
                 }, 500);
               }}
-              className="text-sm bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded"
+              className="text-sm bg-pastel-light hover:bg-pastel-danger text-pastel-text-dark px-4 py-2 rounded-lg transition duration-200"
             >
               Leave
             </button>
@@ -261,7 +261,7 @@ function App() {
           {/* Chat messages container */}
           <div 
             ref={chatContainerRef}
-            className="flex-1 overflow-y-auto p-4 space-y-3"
+            className="flex-1 overflow-y-auto p-6 space-y-4 bg-pastel-bg-light"
           >
             {messages.map((msg, index) => (
               <div 
@@ -269,30 +269,31 @@ function App() {
                 className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}
               >
                 <div 
-                  className={`max-w-[70%] rounded-lg px-4 py-2 break-words ${
+                  className={`max-w-[70%] pastel-message px-5 py-3 break-words ${
                     msg.sender === 'me' 
-                      ? 'bg-purple-600 text-white' 
+                      ? 'bg-pastel-secondary text-pastel-dark' 
                       : msg.sender === 'system'
-                        ? 'bg-gray-600 text-gray-200 italic text-center mx-auto'
-                        : 'bg-gray-700 text-white'
+                        ? 'bg-pastel-bg-medium text-pastel-text-muted italic text-center mx-auto'
+                        : 'bg-pastel-primary text-pastel-dark'
                   }`}
                 >
                   {msg.sender !== 'me' && msg.sender !== 'system' && (
-                    <p className="text-xs font-semibold text-purple-300 mb-1">{msg.sender}</p>
+                    <p className="text-xs font-semibold text-pastel-text-dark mb-1">{msg.sender}</p>
                   )}
                   <p>{msg.text}</p>
                 </div>
               </div>
             ))}
             {messages.length === 0 && (
-              <div className="text-center text-gray-500 mt-10">
-                No messages yet. Start the conversation!
+              <div className="text-center text-pastel-text-muted mt-10 p-8 bg-pastel-bg-medium rounded-lg">
+                <p className="text-lg">No messages yet.</p>
+                <p>Start the conversation!</p>
               </div>
             )}
           </div>
 
           {/* Message input area */}
-          <div className="bg-gray-800 p-4 border-t border-gray-700">
+          <div className="bg-pastel-medium p-5 border-t border-pastel-bg-medium">
             <div className="flex items-center">
               <input
                 type="text"
@@ -300,11 +301,11 @@ function App() {
                 onChange={(e) => setMessageInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type a message..."
-                className="flex-1 bg-gray-700 border border-gray-600 rounded-l-lg px-4 py-2 focus:outline-none focus:border-purple-500"
+                className="flex-1 bg-pastel-light border border-pastel-bg-medium rounded-l-lg px-4 py-3 focus:outline-none focus:border-pastel-secondary"
               />
               <button
                 onClick={sendMessage}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-r-lg transition duration-200"
+                className="bg-pastel-secondary hover:bg-pastel-primary text-pastel-dark px-5 py-3 rounded-r-lg transition duration-200"
               >
                 Send
               </button>

@@ -1,3 +1,18 @@
+/* Pastel color palette variables */
+:root {
+  --pastel-primary: #b5c9e2; /* Soft blue */
+  --pastel-secondary: #f8c7cc; /* Soft pink */
+  --pastel-accent: #c9e4de; /* Soft mint */
+  --pastel-bg-light: #f8f9fa; /* Very light gray */
+  --pastel-bg-medium: #e9ecf5; /* Light lavender gray */
+  --pastel-bg-dark: #d0dae8; /* Medium lavender gray */
+  --pastel-text-dark: #495057; /* Dark gray for text */
+  --pastel-text-muted: #6c757d; /* Medium gray for secondary text */
+  --pastel-danger: #f1aeb5; /* Soft red */
+  --pastel-warning: #ffe5b4; /* Soft yellow */
+  --pastel-success: #b4e0c5; /* Soft green */
+}
+
 /* Reset root styles to ensure chat app takes full screen */
 #root {
   width: 100%;
@@ -14,17 +29,17 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(75, 85, 99, 0.1);
+  background: var(--pastel-bg-light);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.5);
+  background: var(--pastel-primary);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.7);
+  background: var(--pastel-secondary);
 }
 
 /* Message animations */
@@ -48,21 +63,52 @@
 @keyframes pulse {
   0% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.7);
+    box-shadow: 0 0 0 0 rgba(180, 224, 197, 0.7);
   }
   
   70% {
     transform: scale(1);
-    box-shadow: 0 0 0 4px rgba(72, 187, 120, 0);
+    box-shadow: 0 0 0 4px rgba(180, 224, 197, 0);
   }
   
   100% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(72, 187, 120, 0);
+    box-shadow: 0 0 0 0 rgba(180, 224, 197, 0);
   }
 }
 
 /* Apply pulse animation to connected status */
-.bg-green-500 {
+.bg-pastel-success {
   animation: pulse 2s infinite;
+}
+
+/* Custom pastel classes */
+.bg-pastel-primary { background-color: var(--pastel-primary) !important; }
+.bg-pastel-secondary { background-color: var(--pastel-secondary) !important; }
+.bg-pastel-accent { background-color: var(--pastel-accent) !important; }
+.bg-pastel-light { background-color: var(--pastel-bg-light) !important; }
+.bg-pastel-medium { background-color: var(--pastel-bg-medium) !important; }
+.bg-pastel-dark { background-color: var(--pastel-bg-dark) !important; }
+.bg-pastel-success { background-color: var(--pastel-success) !important; }
+.bg-pastel-warning { background-color: var(--pastel-warning) !important; }
+.bg-pastel-danger { background-color: var(--pastel-danger) !important; }
+
+.text-pastel-dark { color: var(--pastel-text-dark) !important; }
+.text-pastel-muted { color: var(--pastel-text-muted) !important; }
+.text-pastel-primary { color: var(--pastel-primary) !important; }
+.text-pastel-secondary { color: var(--pastel-secondary) !important; }
+
+/* Custom shadow */
+.pastel-shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom rounded styles */
+.pastel-rounded {
+  border-radius: 16px;
+}
+
+.pastel-message {
+  border-radius: 18px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
