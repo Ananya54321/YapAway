@@ -71,8 +71,8 @@ YapAway is a lightweight real-time chat application built with **React** and **W
 ---
 
 ## 📸 Preview
+<img width="1470" alt="Screenshot 2025-05-24 at 7 20 52 AM" src="https://github.com/user-attachments/assets/2a9f433e-11a8-4a06-8bf3-9896554a3f7a" />
 
-> *Add screenshots or screen recording here if available*
 
 ---
 
