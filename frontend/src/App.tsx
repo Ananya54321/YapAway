@@ -22,7 +22,7 @@ function App() {
   // Function to establish WebSocket connection
   const connectWebSocket = () => {
     // Create new WebSocket connection to backend server
-    const ws = new WebSocket("ws://localhost:8080");
+    const ws = new WebSocket("wss://yapaway.onrender.com");
     wsRef.current = ws;
 
     // Handle incoming messages from the server
